@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tetsu Express — Spoken Tokyo Japanese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #070814;
+    --card: rgba(16, 18, 40, 0.86);
+    --ink: #f6f3ff;
+    --muted: #b9b4d4;
+    --pink: #ff4fd8;
+    --cyan: #36f0ff;
+    --yellow: #ffe56b;
+    --green: #5dffb1;
+    --orange: #ff9a4d;
+    --line: rgba(255,255,255,.12);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: Nunito, "M PLUS Rounded 1c", sans-serif;
+    color: var(--ink);
+    background: #070814;
+  }
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(180deg, rgba(7,8,20,.55), rgba(7,8,20,.9)), #0b1028;
+    background-size: cover;
+    background-position: center;
+  }
+  .bg.photo {
+    background-image:
+      linear-gradient(180deg, rgba(7,8,20,.58), rgba(7,8,20,.92)),
+      url("https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1920&q=80");
+  }
+  .wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 18px 16px 70px; }
+  header.top {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 10px 4px 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .logo {
+    width: 54px; height: 54px; border-radius: 16px;
+    background: linear-gradient(135deg, var(--cyan), var(--pink));
+    display: grid; place-items: center; font-size: 28px;
+    box-shadow: 0 0 24px rgba(54,240,255,.35);
+  }
+  h1 { font-size: 1.15rem; margin: 0; }
+  .sub { color: var(--muted); font-size: .82rem; }
+  .stats { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    background: rgba(255,255,255,.08); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 10px; font-size: .8rem; font-weight: 800;
+  }
+  .screen { display: none; animation: up .25s ease; }
+  .screen.on { display: block; }
+  @keyframes up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .hero, .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 22px; padding: 18px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.25);
+  }
+  .hero { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: center; }
+  .mascot {
+    width: 110px; height: 110px; border-radius: 24px;
+    background: radial-gradient(circle at 30% 20%, #fff, #ffd4f4 28%, #6be7ff 70%, #3a2a80);
+    display: grid; place-items: center; font-size: 62px;
+  }
+  .bubble { color: var(--yellow); font-weight: 800; margin: 0 0 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 14px; }
+  button { font-family: inherit; cursor: pointer; border: 0; }
+  .tile {
+    text-align: left; color: var(--ink); background: rgba(255,255,255,.06);
+    border: 1px solid var(--line); border-radius: 18px; padding: 14px;
+  }
+  .tile:hover { box-shadow: 0 8px 24px rgba(54,240,255,.14); }
+  .tile h3 { margin: 0 0 6px; font-size: 1rem; }
+  .tile p { margin: 0; color: var(--muted); font-size: .82rem; }
+  .badge { display: inline-block; font-size: .7rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; margin-bottom: 8px; }
+  .b1 { background: #214d3a; color: var(--green); }
+  .b2 { background: #3a2a14; color: var(--orange); }
+  .b3 { background: #3a1440; color: var(--pink); }
+  .b4 { background: #14343a; color: var(--cyan); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .btn {
+    background: linear-gradient(90deg, var(--pink), #7a5cff);
+    color: white; font-weight: 800; border-radius: 999px; padding: 10px 16px;
+  }
+  .btn.sec { background: rgba(255,255,255,.1); }
+  .btn.cyan { background: linear-gradient(90deg, #12c2d4, #36f0ff); color: #062026; }
+  .btn.good { background: linear-gradient(90deg, #1fd67a, #5dffb1); color: #062016; }
+  .prompt { font-size: 1.28rem; font-weight: 800; margin: 8px 0 4px; }
+  .hint { color: var(--muted); min-height: 1.2em; }
+  input[type=text] {
+    width: 100%; margin-top: 12px; padding: 14px 16px; border-radius: 14px;
+    border: 1px solid var(--line); background: rgba(0,0,0,.35); color: white;
+    font-size: 1.05rem; font-family: inherit;
+  }
+  input:focus { outline: 2px solid var(--cyan); }
+  .feedback { margin-top: 12px; border-radius: 16px; padding: 12px 14px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok { background: rgba(93,255,177,.12); border: 1px solid rgba(93,255,177,.35); }
+  .feedback.bad { background: rgba(255,79,216,.1); border: 1px solid rgba(255,79,216,.3); }
+  .jp { font-family: "M PLUS Rounded 1c", sans-serif; font-size: 1.25rem; color: var(--cyan); }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .chip {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18);
+    color: var(--ink); border-radius: 999px; padding: 8px 12px; font-weight: 700;
+  }
+  .chip.on { background: rgba(54,240,255,.16); border-color: var(--cyan); }
+  .chip.warn { border-color: var(--yellow); color: var(--yellow); }
+  .progress { height: 10px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; margin: 10px 0 4px; }
+  .bar { height: 100%; width: 0; background: linear-gradient(90deg, var(--cyan), var(--pink)); }
+  .dojo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 10px; }
+  .gcard { background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 16px; padding: 14px; cursor: pointer; }
+  .gcard h4 { margin: 0 0 6px; color: var(--yellow); }
+  .snap { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .snap button {
+    display: block; width: 100%; margin: 0 0 8px; padding: 12px 10px; border-radius: 14px;
+    font-weight: 800; color: white; background: rgba(255,255,255,.08); border: 1px solid var(--line);
+  }
+  .snap button.sel { outline: 2px solid var(--cyan); }
+  .snap button.good { background: rgba(93,255,177,.2); }
+  .snap button.bad { background: rgba(255,80,80,.25); }
+  .stamps { display: flex; gap: 8px; flex-wrap: wrap; }
+  .stamp {
+    width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+    border: 3px dashed rgba(255,255,255,.25); color: var(--muted); font-size: .7rem; text-align: center; font-weight: 800;
+  }
+  .stamp.got { border-style: solid; border-color: var(--yellow); color: var(--yellow); background: rgba(255,229,107,.08); }
+  .tiny { font-size: .78rem; color: var(--muted); }
+  .issue { margin: 8px 0; padding-left: 8px; border-left: 3px solid var(--pink); white-space: pre-wrap; }
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; }
+    .mascot { width: 84px; height: 84px; font-size: 46px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg" id="bg"></div>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">🚃</div>
+      <div>
+        <h1>Tetsu Express</h1>
+        <div class="sub">Spoken Tokyo Japanese with Conductor Tetsu</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="pill">⚡ <span id="xp">0</span> XP</div>
+      <div class="pill">🏅 <span id="stampCount">0</span> stamps</div>
+      <div class="pill">🔥 <span id="streak">0</span></div>
+    </div>
+  </header>
+
+  <section class="screen on" id="hub">
+    <div class="hero">
+      <div class="mascot">🧢</div>
+      <div>
+        <p class="bubble">“Tap a tile, build a sentence, then say it out loud.”</p>
+        <p>Polite travel Japanese for strangers and staff. Type romaji or tap the word options. Hear the model with ja-JP speech.</p>
+        <div class="row">
+          <button class="btn" data-go="missions">Start missions</button>
+          <button class="btn cyan" data-go="lab">Pattern Lab</button>
+          <button class="btn sec" id="btnHearTetsu">Hear Tetsu</button>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <button class="tile" data-level="1">
+        <span class="badge b1">Level 1 · Yamanote Local</span>
+        <h3>Survival Basics</h3>
+        <p>Greetings, excuse me, thanks, I don’t understand, and where is X.</p>
+      </button>
+      <button class="tile" data-level="2">
+        <span class="badge b2">Level 2 · Rapid</span>
+        <h3>Getting around & eating</h3>
+        <p>Tickets, trains, transfers, ordering food, and the bill.</p>
+      </button>
+      <button class="tile" data-level="3">
+        <span class="badge b3">Level 3 · Limited Express</span>
+        <h3>Stations & souvenirs</h3>
+        <p>Show me this, how much, do you have X, fuller questions.</p>
+      </button>
+      <button class="tile" data-go="dojo">
+        <span class="badge b4">Dojo</span>
+        <h3>Grammar Dojo</h3>
+        <p>WA “what about”, NI knee-slides, and polite request frames.</p>
+      </button>
+      <button class="tile" id="btnSnapHub">
+        <span class="badge b4">Mini-game</span>
+        <h3>Particle Snap</h3>
+        <p>Match particles to their memory hooks.</p>
+      </button>
+      <button class="tile" data-go="stamps">
+        <span class="badge b2">Eki stamps</span>
+        <h3>Stamp book</h3>
+        <p>Collect station stamps as you clear missions.</p>
+      </button>
+    </div>
+  </section>
+
+  <section class="screen" id="missions">
+    <div class="card">
+      <button class="btn sec" data-go="hub">← Hub</button>
+      <h2>Mission board</h2>
+      <p class="tiny">Tap a mission. Later levels reuse the same frames with new nouns.</p>
+      <div class="grid" id="missionList"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="play">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+        <button class="btn sec" data-go="hub">← Hub</button>
+        <div class="pill" id="missionName">Mission</div>
+      </div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="tiny"><span id="qnum">1</span> / <span id="qtot">8</span> · Tap options or type romaji</div>
+      <div class="prompt" id="prompt">...</div>
+      <div class="hint" id="hint"></div>
+      <div class="chips" id="nounChips"></div>
+      <div class="tiny">Word options</div>
+      <div class="chips" id="wordBank"></div>
+      <input id="answer" type="text" placeholder="Type polite Japanese in romaji, or tap the tiles..." autocomplete="off" />
+      <div class="row">
+        <button class="btn good" id="btnCheck">Check ticket</button>
+        <button class="btn cyan" id="btnHear">Hear model</button>
+        <button class="btn sec" id="btnHint">Hint</button>
+        <button class="btn sec" id="btnUndo">Delete last</button>
+        <button class="btn sec" id="btnSkip">Skip</button>
+      </div>
+      <div class="feedback" id="fb"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="lab">
+    <div class="card">
+      <button class="btn sec" data-go="hub">← Hub</button>
+      <h2>Pattern Lab</h2>
+      <p class="bubble">Pick a frame, pick a noun, then build the sentence from the options.</p>
+      <div class="tiny">Frames</div>
+      <div class="chips" id="frames"></div>
+      <div class="tiny">Nouns you can swap in</div>
+      <div class="chips" id="labNouns"></div>
+      <div class="prompt" id="labPrompt"></div>
+      <div class="tiny">Word options</div>
+      <div class="chips" id="labBank"></div>
+      <input id="labAns" type="text" placeholder="Tap tiles or type the full polite sentence..." />
+      <div class="row">
+        <button class="btn good" id="btnLabCheck">Check</button>
+        <button class="btn cyan" id="btnLabHear">Hear it</button>
+        <button class="btn sec" id="btnLabUndo">Delete last</button>
+      </div>
+      <div class="feedback" id="labFb"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="dojo">
+    <div class="card">
+      <button class="btn sec" data-go="hub">← Hub</button>
+      <h2>Grammar Dojo</h2>
+      <p>Tap a particle option. Tetsu keeps the hook short so it sticks.</p>
+      <div class="dojo-grid" id="dojoGrid"></div>
+      <div class="card" id="dojoDetail" style="margin-top:12px;display:none"></div>
+      <div class="row">
+        <button class="btn" id="btnSnapDojo">Play Particle Snap</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="snap">
+    <div class="card">
+      <button class="btn sec" data-go="dojo">← Dojo</button>
+      <h2>Particle Snap</h2>
+      <p class="tiny">Tap a particle, then tap its matching memory hook.</p>
+      <div class="snap" id="snapBoard"></div>
+      <p id="snapStatus"></p>
+    </div>
+  </section>
+
+  <section class="screen" id="stamps">
+    <div class="card">
+      <button class="btn sec" data-go="hub">← Hub</button>
+      <h2>Eki stamp book</h2>
+      <div class="stamps" id="stampBook"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const STAMP_STATIONS = [
+    ["shibuya","Shibuya"],["tokyo","Tokyo"],["shinjuku","Shinjuku"],
+    ["ueno","Ueno"],["akihabara","Akihabara"],["tsukiji","Tsukiji"],
+    ["asakusa","Asakusa"],["ikebukuro","Ikebukuro"],["roppongi","Roppongi"]
+  ];
+
+  const NOUNS = [
+    {id:"eki", en:"the station", r:"eki", jp:"駅", tags:["place","ask"]},
+    {id:"toire", en:"the restroom", r:"toire", jp:"トイレ", alt:["otearai"], tags:["place","ask"]},
+    {id:"norikae", en:"the transfer", r:"norikae", jp:"乗り換え", tags:["place","ask"]},
+    {id:"kaisatsu", en:"the ticket gate", r:"kaisatsu", jp:"改札", tags:["place","ask"]},
+    {id:"homu", en:"the platform", r:"homu", jp:"ホーム", alt:["purattofoomu"], tags:["place","ask"]},
+    {id:"kenbaiki", en:"the ticket machine", r:"kenbaiki", jp:"券売機", tags:["place","ask"]},
+    {id:"shibuya", en:"Shibuya", r:"shibuya", jp:"渋谷", tags:["dest","ask"]},
+    {id:"shinjuku", en:"Shinjuku", r:"shinjuku", jp:"新宿", tags:["dest","ask"]},
+    {id:"tokyoeki", en:"Tokyo Station", r:"tokyo eki", jp:"東京駅", alt:["toukyou eki"], tags:["dest","ask"]},
+    {id:"asakusa", en:"Asakusa", r:"asakusa", jp:"浅草", tags:["dest","ask"]},
+    {id:"ueno", en:"Ueno", r:"ueno", jp:"上野", tags:["dest","ask"]},
+    {id:"akihabara", en:"Akihabara", r:"akihabara", jp:"秋葉原", tags:["dest","ask"]},
+    {id:"kore", en:"this", r:"kore", jp:"これ", tags:["thing","buy","food"]},
+    {id:"sore", en:"that", r:"sore", jp:"それ", tags:["thing","buy"]},
+    {id:"mizu", en:"water", r:"mizu", jp:"水", tags:["food","thing"]},
+    {id:"menyuu", en:"the menu", r:"menyuu", jp:"メニュー", alt:["menu"], tags:["food","thing"]},
+    {id:"ramen", en:"ramen", r:"ramen", jp:"ラーメン", alt:["raamen"], tags:["food","thing"]},
+    {id:"sushi", en:"sushi", r:"sushi", jp:"寿司", tags:["food","thing"]},
+    {id:"okaikei", en:"the bill", r:"okaikei", jp:"お会計", alt:["okanjou"], tags:["food","thing"]},
+    {id:"kippu", en:"a ticket", r:"kippu", jp:"切符", tags:["thing"]},
+    {id:"omiyage", en:"souvenirs", r:"omiyage", jp:"お土産", tags:["buy","thing"]},
+    {id:"banana", en:"Tokyo Banana", r:"tokyo banana", jp:"東京バナナ", alt:["toukyou banana"], tags:["buy","thing"]},
+    {id:"kitkat", en:"KitKat", r:"kitto katto", jp:"キットカット", alt:["kitkat","kittokatto"], tags:["buy","thing"]},
+    {id:"hashi", en:"chopsticks", r:"hashi", jp:"箸", tags:["buy","thing"]},
+    {id:"sensu", en:"a folding fan", r:"sensu", jp:"扇子", tags:["buy","thing"]},
+    {id:"eigo", en:"English", r:"eigo", jp:"英語", tags:["ask"]}
+  ];
+
+  const FRAMES = [
+    {id:"doko", en:"Where is X?", tags:["ask","place","dest"],
+      tokens: n => n.r.split(" ").concat(["wa","doko","desu","ka"]),
+      build: n => n.r + " wa doko desu ka",
+      jp: n => n.jp + "はどこですか",
+      tip:"Frame: X wa doko desu ka"},
+    {id:"kudasai", en:"X, please.", tags:["thing","food","buy"],
+      tokens: n => n.r.split(" ").concat(["o","kudasai"]),
+      build: n => n.r + " o kudasai",
+      jp: n => n.jp + "をください",
+      tip:"Frame: X o kudasai"},
+    {id:"onegai", en:"X, please (request).", tags:["thing","food","buy"],
+      tokens: n => n.r.split(" ").concat(["o","onegaishimasu"]),
+      build: n => n.r + " o onegaishimasu",
+      jp: n => n.jp + "をお願いします",
+      tip:"Frame: X o onegaishimasu"},
+    {id:"made", en:"To X, please.", tags:["dest"],
+      tokens: n => n.r.split(" ").concat(["made","onegaishimasu"]),
+      build: n => n.r + " made onegaishimasu",
+      jp: n => n.jp + "までお願いします",
+      tip:"Frame: X made onegaishimasu"},
+    {id:"ikimasu", en:"Does this train go to X?", tags:["dest"],
+      tokens: n => ["kono","densha","wa"].concat(n.r.split(" "), ["ni","ikimasu","ka"]),
+      build: n => "kono densha wa " + n.r + " ni ikimasu ka",
+      jp: n => "この電車は" + n.jp + "に行きますか",
+      tip:"Frame: kono densha wa X ni ikimasu ka"},
+    {id:"arimasu", en:"Do you have X?", tags:["buy","thing"],
+      tokens: n => n.r.split(" ").concat(["wa","arimasu","ka"]),
+      build: n => n.r + " wa arimasu ka",
+      jp: n => n.jp + "はありますか",
+      tip:"Frame: X wa arimasu ka"},
+    {id:"ikura", en:"How much is X?", tags:["buy","thing"],
+      tokens: n => n.r.split(" ").concat(["wa","ikura","desu","ka"]),
+      build: n => n.r + " wa ikura desu ka",
+      jp: n => n.jp + "はいくらですか",
+      tip:"Frame: X wa ikura desu ka"},
+    {id:"misete", en:"Please show me X.", tags:["buy","thing"],
+      tokens: n => n.r.split(" ").concat(["o","misete","kudasai"]),
+      build: n => n.r + " o misete kudasai",
+      jp: n => n.jp + "を見せてください",
+      tip:"Frame: X o misete kudasai"}
+  ];
+
+  function nounsFor(frame) {
+    return NOUNS.filter(n => n.tags.some(t => frame.tags.includes(t)));
+  }
+
+  const FIXED = [
+    {lvl:1, en:"Hello / Good afternoon.", r:"konnichiwa", jp:"こんにちは", alt:["konnichiha"], tokens:["konnichiwa"]},
+    {lvl:1, en:"Good morning (polite).", r:"ohayou gozaimasu", jp:"おはようございます", alt:["ohayo gozaimasu"], tokens:["ohayou","gozaimasu"]},
+    {lvl:1, en:"Good evening.", r:"konbanwa", jp:"こんばんは", alt:["konbanha"], tokens:["konbanwa"]},
+    {lvl:1, en:"Excuse me.", r:"sumimasen", jp:"すみません", tokens:["sumimasen"]},
+    {lvl:1, en:"Thank you (polite).", r:"arigatou gozaimasu", jp:"ありがとうございます", alt:["arigato gozaimasu"], tokens:["arigatou","gozaimasu"]},
+    {lvl:1, en:"Thank you very much.", r:"doumo arigatou gozaimasu", jp:"どうもありがとうございます", alt:["domo arigatou gozaimasu"], tokens:["doumo","arigatou","gozaimasu"]},
+    {lvl:1, en:"Please (when asking a favor).", r:"onegaishimasu", jp:"お願いします", alt:["onegai shimasu"], tokens:["onegaishimasu"]},
+    {lvl:1, en:"I do not understand.", r:"wakarimasen", jp:"わかりません", tokens:["wakarimasen"]},
+    {lvl:1, en:"Please say it again.", r:"mou ichido onegaishimasu", jp:"もう一度お願いします", tokens:["mou","ichido","onegaishimasu"]},
+    {lvl:1, en:"Please speak slowly.", r:"yukkuri hanashite kudasai", jp:"ゆっくり話してください", tokens:["yukkuri","hanashite","kudasai"]},
+    {lvl:1, en:"Do you speak English?", r:"eigo ga hanasemasu ka", jp:"英語が話せますか", alt:["eigo o hanasemasu ka"], tokens:["eigo","ga","hanasemasu","ka"]},
+    {lvl:1, en:"Yes.", r:"hai", jp:"はい", tokens:["hai"]},
+    {lvl:1, en:"No.", r:"iie", jp:"いいえ", tokens:["iie"]},
+    {lvl:1, en:"Nice to meet you.", r:"hajimemashite", jp:"はじめまして", tokens:["hajimemashite"]},
+    {lvl:1, en:"Where is the restroom?", r:"toire wa doko desu ka", jp:"トイレはどこですか", alt:["otearai wa doko desu ka"], tokens:["toire","wa","doko","desu","ka"]},
+    {lvl:1, en:"Where is the station?", r:"eki wa doko desu ka", jp:"駅はどこですか", tokens:["eki","wa","doko","desu","ka"]},
+    {lvl:2, en:"The bill, please.", r:"okaikei o onegaishimasu", jp:"お会計をお願いします", alt:["okanjou o onegaishimasu","okaikei o kudasai"], tokens:["okaikei","o","onegaishimasu"]},
+    {lvl:2, en:"Water, please.", r:"mizu o kudasai", jp:"水をください", tokens:["mizu","o","kudasai"]},
+    {lvl:2, en:"This, please.", r:"kore o kudasai", jp:"これをください", tokens:["kore","o","kudasai"]},
+    {lvl:2, en:"The menu, please.", r:"menyuu o kudasai", jp:"メニューをください", alt:["menu o kudasai"], tokens:["menyuu","o","kudasai"]},
+    {lvl:2, en:"What do you recommend?", r:"osusume wa nan desu ka", jp:"おすすめは何ですか", tokens:["osusume","wa","nan","desu","ka"]},
+    {lvl:2, en:"It is delicious.", r:"oishii desu", jp:"おいしいです", tokens:["oishii","desu"]},
+    {lvl:2, en:"One ticket, please.", r:"kippu o ichimai kudasai", jp:"切符を一枚ください", tokens:["kippu","o","ichimai","kudasai"]},
+    {lvl:2, en:"To Shinjuku, please.", r:"shinjuku made onegaishimasu", jp:"新宿までお願いします", tokens:["shinjuku","made","onegaishimasu"]},
+    {lvl:2, en:"Does this train go to Shibuya?", r:"kono densha wa shibuya ni ikimasu ka", jp:"この電車は渋谷に行きますか", tokens:["kono","densha","wa","shibuya","ni","ikimasu","ka"]},
+    {lvl:2, en:"Where do I transfer?", r:"doko de norikaemasu ka", jp:"どこで乗り換えますか", tokens:["doko","de","norikaemasu","ka"]},
+    {lvl:2, en:"Where is the transfer?", r:"norikae wa doko desu ka", jp:"乗り換えはどこですか", tokens:["norikae","wa","doko","desu","ka"]},
+    {lvl:2, en:"Which way is it?", r:"dochira desu ka", jp:"どちらですか", tokens:["dochira","desu","ka"]},
+    {lvl:3, en:"How much is this?", r:"kore wa ikura desu ka", jp:"これはいくらですか", tokens:["kore","wa","ikura","desu","ka"]},
+    {lvl:3, en:"Please show me this.", r:"kore o misete kudasai", jp:"これを見せてください", tokens:["kore","o","misete","kudasai"]},
+    {lvl:3, en:"Do you have souvenirs?", r:"omiyage wa arimasu ka", jp:"お土産はありますか", tokens:["omiyage","wa","arimasu","ka"]},
+    {lvl:3, en:"I want to buy souvenirs.", r:"omiyage o kaitai desu", jp:"お土産を買いたいです", tokens:["omiyage","o","kaitai","desu"]},
+    {lvl:3, en:"Do you have Tokyo Banana?", r:"tokyo banana wa arimasu ka", jp:"東京バナナはありますか", alt:["toukyou banana wa arimasu ka"], tokens:["tokyo","banana","wa","arimasu","ka"]},
+    {lvl:3, en:"Where is the ticket gate?", r:"kaisatsu wa doko desu ka", jp:"改札はどこですか", tokens:["kaisatsu","wa","doko","desu","ka"]},
+    {lvl:3, en:"Does this train go to Asakusa?", r:"kono densha wa asakusa ni ikimasu ka", jp:"この電車は浅草に行きますか", tokens:["kono","densha","wa","asakusa","ni","ikimasu","ka"]},
+    {lvl:3, en:"To Tokyo Station, please.", r:"tokyo eki made onegaishimasu", jp:"東京駅までお願いします", alt:["toukyou eki made onegaishimasu"], tokens:["tokyo","eki","made","onegaishimasu"]},
+    {lvl:3, en:"I will take this.", r:"kore o kudasai", jp:"これをください", tokens:["kore","o","kudasai"]},
+    {lvl:3, en:"Where is the platform?", r:"homu wa doko desu ka", jp:"ホームはどこですか", alt:["purattofoomu wa doko desu ka"], tokens:["homu","wa","doko","desu","ka"]}
+  ];
+
+  const GRAMMAR = [
+    {p:"wa", hook:"what about", title:"WA — What About…?", text:"WA sounds like the start of “What about…?” Point at the thing you’re talking about: “What about the restroom?” → toire wa doko desu ka. WA marks the topic. Write wa even though the kana is は.", ex:"toire wa doko desu ka", jp:"トイレはどこですか", en:"Where is the restroom?"},
+    {p:"o", hook:"object tag", title:"O — object tag", text:"O is a luggage tag on the thing you want, order, show, or buy.", ex:"mizu o kudasai", jp:"水をください", en:"Water, please."},
+    {p:"ni", hook:"knee-slide destination", title:"NI — knee-slide destination", text:"Slide toward a place. NI is the landing spot, not the stage.", ex:"kono densha wa shibuya ni ikimasu ka", jp:"この電車は渋谷に行きますか", en:"Does this train go to Shibuya?"},
+    {p:"de", hook:"the stage", title:"DE — the stage", text:"DE is where the action happens: transfer here, eat here.", ex:"doko de norikaemasu ka", jp:"どこで乗り換えますか", en:"Where do I transfer?"},
+    {p:"made", hook:"I made it to the end", title:"MADE — I made it to the end", text:"As far as X. Taxi windows and ticket staff love this.", ex:"shinjuku made onegaishimasu", jp:"新宿までお願いします", en:"To Shinjuku, please."},
+    {p:"no", hook:"the glue of", title:"NO — the glue of", text:"NO clips two nouns together: Tokyo no eki.", ex:"tokyo no eki wa doko desu ka", jp:"東京の駅はどこですか", en:"Where is Tokyo Station?"},
+    {p:"ka", hook:"curious cat", title:"KA — curious cat", text:"A cat tilts its head at the end of a question. Keep desu/masu + ka.", ex:"kore wa ikura desu ka", jp:"これはいくらですか", en:"How much is this?"},
+    {p:"ga", hook:"who can", title:"GA — who can / what is", text:"GA marks who can or what is. WA is “What about X…?” GA is “X is the one that can / the one that is.” Travel example: eigo ga hanasemasu ka. Write ga for が.", ex:"eigo ga hanasemasu ka", jp:"英語が話せますか", en:"Do you speak English?"}
+  ];
+
+  const PARTICLE_EXPLAIN = {
+    wa: {
+      why: "WA marks the topic: “What about X…?”",
+      wrong: "WA only labels what you are talking about. It does not mark an object, a destination, or the place an action happens."
+    },
+    o: {
+      why: "O is the object tag on the thing you order, show, or buy.",
+      wrong: "O marks the thing being acted on. It is not a topic marker and not a destination."
+    },
+    ni: {
+      why: "NI is the knee-slide destination: the place you move toward.",
+      wrong: "NI is for going to a place, not for naming the stage where an action happens."
+    },
+    de: {
+      why: "DE is the stage: the place where the action happens.",
+      wrong: "DE is not a destination. Use NI to go somewhere; use DE for doing something there."
+    },
+    made: {
+      why: "MADE means “as far as X,” the end point of a trip or staff request.",
+      wrong: "MADE is an endpoint, not a topic, object, or general NI destination."
+    },
+    no: {
+      why: "NO glues two nouns: A no B means B of A.",
+      wrong: "NO links nouns. It does not mark a topic or an object."
+    },
+    ka: {
+      why: "KA is the curious-cat question ending.",
+      wrong: "KA only ends a question. It is not a topic or object marker."
+    },
+    ga: {
+      why: "GA marks who can or what is — the subject of ability or existence.",
+      wrong: "GA is not “What about X…?” That topic job belongs to WA."
+    }
+  };
+
+  const CONTRAST = {
+    ni: ["de", "made"],
+    de: ["ni", "made"],
+    made: ["ni", "de"],
+    wa: ["ga", "o"],
+    ga: ["wa"],
+    o: ["wa", "ga", "ni"],
+    no: ["wa"],
+    ka: []
+  };
+
+  const POLITE_EXPLAIN = {
+    desu: {
+      why: "With strangers and staff, a polite statement or question keeps desu (or desu ka).",
+      miss: "A bare noun plus doko / ikura is too clipped for station and shop talk."
+    },
+    kudasai: {
+      why: "Kudasai finishes a polite “please give / please do” request.",
+      miss: "Without kudasai, the request sounds unfinished or too blunt."
+    },
+    onegaishimasu: {
+      why: "Onegaishimasu is the staff-favor bow, especially with X o … or X made …",
+      miss: "Taxi, ticket, and bill requests to staff usually end in onegaishimasu."
+    },
+    gozaimasu: {
+      why: "Gozaimasu raises thanks to staff-level politeness.",
+      miss: "Arigatou is fine with friends. Station and shop staff expect gozaimasu."
+    }
+  };
+
+  const DECOYS = ["wa","o","ni","de","ga","no","made","ka","desu","kudasai","onegaishimasu"];
+
+  const state = { xp:0, streak:0, stamps:{}, queue:[], i:0, current:null, hintUsed:false, level:1 };
+  let labFrame = FRAMES[0];
+  let labNoun = nounsFor(FRAMES[0])[0];
+
+  function load() {
+    try {
+      const raw = localStorage.getItem("tetsu-express-v2");
+      if (raw) {
+        const saved = JSON.parse(raw);
+        state.xp = saved.xp || 0;
+        state.streak = saved.streak || 0;
+        state.stamps = saved.stamps || {};
+      }
+    } catch (e) {}
+    paintStats();
+  }
+  function save() {
+    localStorage.setItem("tetsu-express-v2", JSON.stringify({
+      xp: state.xp, streak: state.streak, stamps: state.stamps
+    }));
+    paintStats();
+  }
+  function paintStats() {
+    document.getElementById("xp").textContent = state.xp;
+    document.getElementById("streak").textContent = state.streak;
+    document.getElementById("stampCount").textContent = Object.keys(state.stamps).length;
+  }
+
+  const bg = document.getElementById("bg");
+  const img = new Image();
+  img.onload = function () { bg.classList.add("photo"); };
+  img.onerror = function () { bg.classList.remove("photo"); };
+  img.src = "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1920&q=80";
+
+  function go(id) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("on"));
+    document.getElementById(id).classList.add("on");
+    if (id === "missions") renderMissions();
+    if (id === "dojo") renderDojo();
+    if (id === "stamps") renderStamps();
+    if (id === "lab") renderLab();
+  }
+
+  function speakJP(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "ja-JP";
+    u.rate = 0.88;
+    const voices = window.speechSynthesis.getVoices() || [];
+    const jp = voices.find(v => (v.lang || "").toLowerCase().indexOf("ja") === 0);
+    if (jp) u.voice = jp;
+    window.speechSynthesis.speak(u);
+  }
+  if (window.speechSynthesis) window.speechSynthesis.getVoices();
+
+  function norm(s) {
+    s = String(s || "").toLowerCase().trim();
+    s = s.replace(/[?!.,。、！？]/g, " ");
+    s = s.replace(/ō/g, "ou").replace(/ū/g, "uu").replace(/ā/g, "aa");
+    s = s.replace(/\s+/g, " ");
+    s = s.replace(/\barigato\b/g, "arigatou");
+    s = s.replace(/\bohayo\b/g, "ohayou");
+    s = s.replace(/\bonegai shimasu\b/g, "onegaishimasu");
+    s = s.replace(/\bgozaimas\b/g, "gozaimasu");
+    s = s.replace(/\btoukyou\b/g, "tokyo");
+    s = s.replace(/\braamen\b/g, "ramen");
+    s = s.replace(/\bpurattofoomu\b/g, "homu");
+    s = s.replace(/\bwo\b/g, "o");
+    s = s.replace(/\bha\b/g, "wa");
+    s = s.replace(/\bdesuka\b/g, "desu ka");
+    s = s.replace(/\bikimasuka\b/g, "ikimasu ka");
+    s = s.replace(/\barimasuka\b/g, "arimasu ka");
+    return s.trim();
+  }
+  function compact(s) { return norm(s).replace(/\s+/g, ""); }
+
+  const LEX = [
+    "onegaishimasu","arigatou","gozaimasu","wakarimasen","sumimasen","konnichiwa","konbanwa",
+    "ohayou","hajimemashite","hanashite","hanasemasu","norikaemasu","norikae","kaisatsu",
+    "kenbaiki","kudasai","misete","kaitai","ikimasu","arimasu","yukkuri","ichimai",
+    "okanjou","okaikei","osusume","oishii","omiyage","shibuya","shinjuku","asakusa",
+    "akihabara","banana","kitto","katto","densha","kore","sore","toire","otearai",
+    "menyuu","ramen","kippu","homu","eigo","dochira","doko","ikura","mizu","hashi",
+    "sensu","eki","made","desu","kono","mou","ichido","doumo","hai","iie","nan",
+    "tokyo","wa","ga","o","ni","de","no","ka","to"
+  ].sort(function (a,b) { return b.length - a.length; });
+
+  function segment(raw) {
+    let s = compact(raw);
+    const out = [];
+    while (s.length) {
+      const hit = LEX.find(function (w) { return s.indexOf(w) === 0; });
+      if (!hit) { out.push(s.charAt(0)); s = s.slice(1); }
+      else { out.push(hit); s = s.slice(hit.length); }
+    }
+    return out;
+  }
+
+  function sameAnswer(user, item) {
+    const u = compact(user);
+    const opts = [item.r].concat(item.alt || []);
+    return opts.some(function (o) { return compact(o) === u; });
+  }
+
+  function note(title, lines) {
+    return { title: title, fix: lines.join("\n") };
+  }
+
+  function pairSwaps(extra, missing) {
+    const extraLeft = extra.slice();
+    const missLeft = missing.slice();
+    const pairs = [];
+    extraLeft.slice().forEach(function (wrong) {
+      const prefs = CONTRAST[wrong] || [];
+      let hit = -1;
+      for (let i = 0; i < missLeft.length; i++) {
+        if (prefs.indexOf(missLeft[i]) >= 0) { hit = i; break; }
+      }
+      if (hit < 0 && missLeft.length) hit = 0;
+      if (hit >= 0) {
+        pairs.push({ wrong: wrong, need: missLeft[hit] });
+        missLeft.splice(hit, 1);
+        extraLeft.splice(extraLeft.indexOf(wrong), 1);
+      }
+    });
+    return { pairs: pairs, extra: extraLeft, missing: missLeft };
+  }
+
+  function analyze(user, item) {
+    if (sameAnswer(user, item)) return {ok:true, issues:[]};
+    const issues = [];
+    const uSeg = segment(user);
+    const eSeg = segment(item.r);
+    const particles = ["wa","o","ni","de","made","no","ka","ga"];
+    const polite = ["desu","kudasai","onegaishimasu","gozaimasu"];
+
+    const uP = uSeg.filter(function (t) { return particles.indexOf(t) >= 0; });
+    const eP = eSeg.filter(function (t) { return particles.indexOf(t) >= 0; });
+    const extraP = uP.filter(function (p) { return eP.indexOf(p) < 0; });
+    const missP = eP.filter(function (p) { return uP.indexOf(p) < 0; });
+    const swapped = pairSwaps(extraP, missP);
+
+    swapped.pairs.forEach(function (pair) {
+      const needInfo = PARTICLE_EXPLAIN[pair.need] || { why: "This particle belongs in the model frame." };
+      const wrongInfo = PARTICLE_EXPLAIN[pair.wrong] || { wrong: "This particle does not fit this frame." };
+      issues.push(note("Used 「" + pair.wrong + "」 instead of 「" + pair.need + "」", [
+        "Needed 「" + pair.need + "」: " + needInfo.why,
+        "You used 「" + pair.wrong + "」: " + wrongInfo.wrong,
+        "Fix fragment: … " + pair.need + " …"
+      ]));
+    });
+    swapped.missing.forEach(function (need) {
+      const info = PARTICLE_EXPLAIN[need] || { why: "This particle belongs in the model frame." };
+      issues.push(note("Missing 「" + need + "」", [
+        "Needed 「" + need + "」: " + info.why,
+        "You left it out, so the sentence loses that grammatical job.",
+        "Model uses 「" + need + "」 in: " + item.r
+      ]));
+    });
+    swapped.extra.forEach(function (wrong) {
+      const info = PARTICLE_EXPLAIN[wrong] || { wrong: "This particle does not fit this frame." };
+      issues.push(note("Extra 「" + wrong + "」", [
+        "You used 「" + wrong + "」: " + info.wrong,
+        "This model sentence does not need that particle."
+      ]));
+    });
+
+    polite.forEach(function (p) {
+      if (eSeg.indexOf(p) >= 0 && uSeg.indexOf(p) < 0) {
+        const info = POLITE_EXPLAIN[p];
+        issues.push(note("Missing polite 「" + p + "」", [
+          "Needed 「" + p + "」: " + info.why,
+          "Without it: " + info.miss
+        ]));
+      }
+    });
+
+    const uCore = uSeg.filter(function (t) { return particles.indexOf(t) < 0 && t.length > 1; });
+    const eCore = eSeg.filter(function (t) { return particles.indexOf(t) < 0 && t.length > 1; });
+    if (eCore.length > 1 && uCore.length > 1) {
+      const idx = eCore.map(function (w) { return uCore.indexOf(w); }).filter(function (i) { return i >= 0; });
+      const unsorted = idx.some(function (v, i, a) { return i && v < a[i - 1]; });
+      if (unsorted) {
+        issues.push(note("Word order wobble", [
+          "Needed order: content words stay in the travel-frame sequence, with particles clipped on.",
+          "You used the right pieces in the wrong order.",
+          "Model: " + item.r
+        ]));
+      }
+    }
+
+    if (!issues.length) {
+      issues.push(note("Close, but not the model sentence", [
+        "Needed: " + item.r,
+        "Check each chunk and clip the travel particles onto the right nouns."
+      ]));
+    }
+    return {ok:false, issues: issues.slice(0, 3)};
+  }
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function unique(arr) {
+    const seen = {};
+    return arr.filter(function (x) {
+      if (seen[x]) return false;
+      seen[x] = true;
+      return true;
+    });
+  }
+
+  function makePatternQ(level) {
+    const ids = level === 1 ? ["doko","kudasai"]
+      : level === 2 ? ["doko","kudasai","onegai","made","ikimasu"]
+      : FRAMES.map(function (f) { return f.id; });
+    const frame = FRAMES.filter(function (f) { return ids.indexOf(f.id) >= 0; })[
+      Math.floor(Math.random() * ids.length)
+    ];
+    const pool = nounsFor(frame);
+    const noun = pool[Math.floor(Math.random() * pool.length)];
+    return {
+      lvl: level,
+      en: frame.en.replace("X", noun.en),
+      r: frame.build(noun),
+      jp: frame.jp(noun),
+      alt: (noun.alt || []).map(function (a) { return frame.build({r:a, jp:noun.jp}); }),
+      hint: frame.tip + " · noun: " + noun.r,
+      tokens: frame.tokens(noun),
+      noun: noun,
+      frame: frame
+    };
+  }
+
+  function buildQueue(level) {
+    const fixed = FIXED.filter(function (q) { return q.lvl <= level; });
+    const q = shuffle(fixed).slice(0, level === 1 ? 4 : 3);
+    while (q.length < 8) q.push(makePatternQ(level));
+    return shuffle(q);
+  }
+
+  function startLevel(level) {
+    state.queue = buildQueue(level);
+    state.i = 0;
+    state.level = level;
+    state.missionId = ["shibuya","tsukiji","akihabara"][level-1];
+    document.getElementById("missionName").textContent =
+      ["Lv1 Survival · Shibuya","Lv2 Transit & food · Tsukiji","Lv3 Stations & souvenirs · Akihabara"][level-1];
+    go("play");
+    showQ();
+  }
+
+  function renderMissions() {
+    const names = [
+      [1,"Shibuya Crossing","Greet, thank, and ask where X is."],
+      [2,"Tsukiji / Metro","Order food and ride the rails."],
+      [3,"Akihabara souvenirs","Prices, stock, and fuller questions."]
+    ];
+    const box = document.getElementById("missionList");
+    box.innerHTML = "";
+    names.forEach(function (row) {
+      const btn = document.createElement("button");
+      btn.className = "tile";
+      btn.innerHTML = '<span class="badge ' + ["b1","b2","b3"][row[0]-1] + '">Level ' + row[0] + '</span><h3>' + row[1] + '</h3><p>' + row[2] + '</p>';
+      btn.addEventListener("click", function () { startLevel(row[0]); });
+      box.appendChild(btn);
+    });
+  }
+
+  function fillBank(container, tokens) {
+    container.innerHTML = "";
+    const extras = shuffle(DECOYS).slice(0, 3);
+    const tiles = shuffle(unique(tokens.concat(extras)));
+    tiles.forEach(function (word) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = word;
+      b.addEventListener("click", function () {
+        const input = container.id === "labBank" ? document.getElementById("labAns") : document.getElementById("answer");
+        input.value = (input.value ? input.value + " " : "") + word;
+        input.focus();
+      });
+      container.appendChild(b);
+    });
+  }
+
+  function undoInput(id) {
+    const input = document.getElementById(id);
+    const parts = norm(input.value).split(" ").filter(Boolean);
+    parts.pop();
+    input.value = parts.join(" ");
+    input.focus();
+  }
+
+  function showQ() {
+    const item = state.queue[state.i];
+    state.current = item;
+    state.hintUsed = false;
+    document.getElementById("prompt").textContent = "English → Japanese: " + item.en;
+    document.getElementById("hint").textContent = "";
+    document.getElementById("answer").value = "";
+    const fb = document.getElementById("fb");
+    fb.className = "feedback";
+    fb.innerHTML = "";
+    document.getElementById("qnum").textContent = String(state.i + 1);
+    document.getElementById("qtot").textContent = String(state.queue.length);
+    document.getElementById("bar").style.width = (state.i / state.queue.length * 100) + "%";
+
+    const chips = document.getElementById("nounChips");
+    chips.innerHTML = "";
+    if (item.noun && item.frame) {
+      const info = document.createElement("span");
+      info.className = "chip on";
+      info.textContent = item.noun.en + " = " + item.noun.r;
+      chips.appendChild(info);
+      const swap = document.createElement("button");
+      swap.type = "button";
+      swap.className = "chip warn";
+      swap.textContent = "Swap noun";
+      swap.addEventListener("click", function () {
+        const pool = nounsFor(item.frame).filter(function (n) { return n.id !== item.noun.id; });
+        const nxt = pool[Math.floor(Math.random() * pool.length)] || item.noun;
+        const rebuilt = {
+          lvl: item.lvl,
+          en: item.frame.en.replace("X", nxt.en),
+          r: item.frame.build(nxt),
+          jp: item.frame.jp(nxt),
+          alt: (nxt.alt || []).map(function (a) { return item.frame.build({r:a, jp:nxt.jp}); }),
+          hint: item.frame.tip + " · noun: " + nxt.r,
+          tokens: item.frame.tokens(nxt),
+          noun: nxt,
+          frame: item.frame
+        };
+        state.queue[state.i] = rebuilt;
+        showQ();
+      });
+      chips.appendChild(swap);
+    }
+    fillBank(document.getElementById("wordBank"), item.tokens || item.r.split(" "));
+    document.getElementById("answer").focus();
+  }
+
+  function showSoftHint() {
+    if (!state.current) return;
+    state.hintUsed = true;
+    const parts = state.current.r.split(" ");
+    const masked = parts.map(function (w, i) {
+      return (i === 0 || ["wa","o","ni","de","made","ka","ga"].indexOf(w) >= 0) ? w : "___";
+    }).join(" ");
+    document.getElementById("hint").textContent = "Skeleton: " + masked + (state.current.hint ? " · " + state.current.hint : "");
+  }
+
+  function paintFeedback(el, ok, html) {
+    el.className = "feedback show " + (ok ? "ok" : "bad");
+    el.innerHTML = html;
+    el.querySelectorAll("[data-speak]").forEach(function (b) {
+      b.addEventListener("click", function () { speakJP(b.getAttribute("data-speak")); });
+    });
+    el.querySelectorAll("[data-next]").forEach(function (b) {
+      b.addEventListener("click", nextQ);
+    });
+    el.querySelectorAll("[data-hub]").forEach(function (b) {
+      b.addEventListener("click", function () { go("hub"); });
+    });
+    el.querySelectorAll("[data-stamps]").forEach(function (b) {
+      b.addEventListener("click", function () { go("stamps"); });
+    });
+  }
+
+  function checkAnswer() {
+    const item = state.current;
+    const user = document.getElementById("answer").value;
+    const fb = document.getElementById("fb");
+    if (!norm(user)) {
+      paintFeedback(fb, false, "Punch in a romaji ticket first, or tap the word options.");
+      return;
+    }
+    const res = analyze(user, item);
+    if (res.ok) {
+      const gain = state.hintUsed ? 8 : 12;
+      state.xp += gain;
+      state.streak += 1;
+      save();
+      paintFeedback(fb, true,
+        "<strong>Ticket stamped!</strong> +" + gain + " XP<br><div class='jp'></div><div></div>" +
+        "<div class='row'><button class='btn cyan' data-speak=''>Hear again</button>" +
+        "<button class='btn good' data-next='1'>Next stop</button></div>"
+      );
+      fb.querySelector(".jp").textContent = item.jp;
+      fb.querySelector(".jp + div").textContent = item.r;
+      fb.querySelector("[data-speak]").setAttribute("data-speak", item.jp);
+      speakJP(item.jp);
+    } else {
+      state.streak = 0;
+      save();
+      const bits = res.issues.map(function () {
+        return "<div class='issue'><strong></strong><br><span></span></div>";
+      }).join("");
+      paintFeedback(fb, false, "<strong>Mind the particle gap.</strong> Needed vs what you used:" + bits +
+        "<div style='margin-top:8px'>Model: <span class='jp'></span><br><span class='rom'></span></div>" +
+        "<div class='row'><button class='btn cyan' data-speak=''>Hear model</button>" +
+        "<button class='btn sec' data-next='1'>Skip to next</button></div>");
+      const issues = fb.querySelectorAll(".issue");
+      res.issues.forEach(function (x, i) {
+        issues[i].querySelector("strong").textContent = x.title;
+        issues[i].querySelector("span").textContent = x.fix;
+      });
+      fb.querySelector(".jp").textContent = item.jp;
+      fb.querySelector(".rom").textContent = item.r;
+      fb.querySelector("[data-speak]").setAttribute("data-speak", item.jp);
+    }
+  }
+
+  function nextQ() {
+    state.i += 1;
+    if (state.i >= state.queue.length) {
+      finishMission();
+      return;
+    }
+    showQ();
+  }
+
+  function finishMission() {
+    const id = state.missionId || "tokyo";
+    state.stamps[id] = true;
+    state.xp += 20;
+    save();
+    paintFeedback(document.getElementById("fb"), true,
+      "<strong>Mission complete.</strong> Stamp collected: " + id + ". +20 bonus XP." +
+      "<div class='row'><button class='btn' data-stamps='1'>Open stamp book</button>" +
+      "<button class='btn sec' data-hub='1'>Back to hub</button></div>");
+    document.getElementById("bar").style.width = "100%";
+    speakJP("よくできました。次の駅に進みましょう。");
+  }
+
+  function renderLab() {
+    const frameBox = document.getElementById("frames");
+    const nounBox = document.getElementById("labNouns");
+    frameBox.innerHTML = "";
+    nounBox.innerHTML = "";
+    FRAMES.forEach(function (f) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (f.id === labFrame.id ? " on" : "");
+      b.textContent = f.en;
+      b.addEventListener("click", function () {
+        labFrame = f;
+        const pool = nounsFor(labFrame);
+        if (pool.indexOf(labNoun) < 0) labNoun = pool[0];
+        renderLab();
+      });
+      frameBox.appendChild(b);
+    });
+    nounsFor(labFrame).forEach(function (n) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (n.id === labNoun.id ? " on" : "");
+      b.textContent = n.en;
+      b.addEventListener("click", function () {
+        labNoun = n;
+        renderLab();
+      });
+      nounBox.appendChild(b);
+    });
+    document.getElementById("labPrompt").textContent = 'Say: “' + labFrame.en.replace("X", labNoun.en) + '”';
+    document.getElementById("labAns").value = "";
+    document.getElementById("labFb").className = "feedback";
+    document.getElementById("labFb").innerHTML = "";
+    fillBank(document.getElementById("labBank"), labFrame.tokens(labNoun));
+  }
+
+  function checkLab() {
+    const item = {
+      r: labFrame.build(labNoun),
+      jp: labFrame.jp(labNoun),
+      alt: (labNoun.alt || []).map(function (a) { return labFrame.build({r:a, jp:labNoun.jp}); })
+    };
+    const fb = document.getElementById("labFb");
+    const res = analyze(document.getElementById("labAns").value, item);
+    if (res.ok) {
+      state.xp += 6; save();
+      paintFeedback(fb, true, "<strong>Nice construction.</strong><div class='jp'></div><div class='rom'></div>");
+      fb.querySelector(".jp").textContent = item.jp;
+      fb.querySelector(".rom").textContent = item.r;
+      speakJP(item.jp);
+    } else {
+      paintFeedback(fb, false, res.issues.map(function () {
+        return "<div class='issue'><strong></strong><br><span></span></div>";
+      }).join("") + "<div>Model: <span class='rom'></span></div>");
+      const issues = fb.querySelectorAll(".issue");
+      res.issues.forEach(function (x, i) {
+        issues[i].querySelector("strong").textContent = x.title;
+        issues[i].querySelector("span").textContent = x.fix;
+      });
+      fb.querySelector(".rom").textContent = item.r;
+    }
+  }
+
+  function renderDojo() {
+    const grid = document.getElementById("dojoGrid");
+    grid.innerHTML = "";
+    GRAMMAR.forEach(function (g) {
+      const card = document.createElement("div");
+      card.className = "gcard";
+      card.innerHTML = "<h4></h4><div></div>";
+      card.querySelector("h4").textContent = g.p;
+      card.querySelector("div").textContent = g.title;
+      card.addEventListener("click", function () { openDojo(g); });
+      grid.appendChild(card);
+    });
+  }
+
+  function openDojo(g) {
+    const el = document.getElementById("dojoDetail");
+    el.style.display = "block";
+    el.innerHTML =
+      "<h3></h3>" +
+      "<p class='hook'></p>" +
+      "<p class='tiny text'></p>" +
+      "<p class='en'></p>" +
+      "<div class='jp'></div>" +
+      "<div class='ex'></div>" +
+      "<button class='btn cyan' type='button'>Hear example</button>";
+    el.querySelector("h3").textContent = g.title;
+    el.querySelector(".hook").textContent = "Memory hook: " + g.hook;
+    el.querySelector(".text").textContent = g.text;
+    el.querySelector(".en").textContent = "English: " + (g.en || "");
+    el.querySelector(".jp").textContent = g.jp;
+    el.querySelector(".ex").textContent = g.ex;
+    el.querySelector("button").addEventListener("click", function () { speakJP(g.jp); });
+  }
+
+  function startSnap() {
+    go("snap");
+    const leftCol = document.createElement("div");
+    const rightCol = document.createElement("div");
+    const left = shuffle(GRAMMAR.map(function (g) { return {k:g.p, t:g.p}; }));
+    const right = shuffle(GRAMMAR.map(function (g) { return {k:g.p, t:g.hook}; }));
+    const board = document.getElementById("snapBoard");
+    board.innerHTML = "";
+    board.appendChild(leftCol);
+    board.appendChild(rightCol);
+    function mk(side, item) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = item.t;
+      b.dataset.side = side;
+      b.dataset.k = item.k;
+      return b;
+    }
+    left.forEach(function (x) { leftCol.appendChild(mk("l", x)); });
+    right.forEach(function (x) { rightCol.appendChild(mk("r", x)); });
+    let sel = null, matched = 0;
+    document.getElementById("snapStatus").textContent = "Tap one particle, then its hook.";
+    board.querySelectorAll("button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (btn.classList.contains("good")) return;
+        if (!sel) {
+          board.querySelectorAll("button").forEach(function (b) { b.classList.remove("sel"); });
+          btn.classList.add("sel");
+          sel = btn;
+          return;
+        }
+        if (sel === btn) { btn.classList.remove("sel"); sel = null; return; }
+        if (sel.dataset.side === btn.dataset.side) {
+          sel.classList.remove("sel");
+          btn.classList.add("sel");
+          sel = btn;
+          return;
+        }
+        if (sel.dataset.k === btn.dataset.k) {
+          sel.classList.add("good");
+          btn.classList.add("good");
+          sel.classList.remove("sel");
+          sel = null;
+          matched += 1;
+          state.xp += 4;
+          save();
+          document.getElementById("snapStatus").textContent = matched + " / " + GRAMMAR.length + " linked.";
+          if (matched === GRAMMAR.length) {
+            state.stamps.ueno = true;
+            state.xp += 15;
+            save();
+            document.getElementById("snapStatus").textContent = "All hooks locked. Ueno stamp earned!";
+            speakJP("よくできました。");
+          }
+        } else {
+          const a = sel, b = btn;
+          a.classList.add("bad");
+          b.classList.add("bad");
+          sel = null;
+          setTimeout(function () {
+            a.classList.remove("bad", "sel");
+            b.classList.remove("bad");
+          }, 400);
+        }
+      });
+    });
+  }
+
+  function renderStamps() {
+    const book = document.getElementById("stampBook");
+    book.innerHTML = "";
+    STAMP_STATIONS.forEach(function (row) {
+      const d = document.createElement("div");
+      d.className = "stamp" + (state.stamps[row[0]] ? " got" : "");
+      d.textContent = (state.stamps[row[0]] ? "✓ " : "") + row[1];
+      book.appendChild(d);
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    const goBtn = e.target.closest("[data-go]");
+    if (goBtn) go(goBtn.getAttribute("data-go"));
+    const lvl = e.target.closest("[data-level]");
+    if (lvl) startLevel(Number(lvl.getAttribute("data-level")));
+  });
+
+  document.getElementById("btnHearTetsu").addEventListener("click", function () {
+    speakJP("東京へようこそ。一緒に練習しましょう。");
+  });
+  document.getElementById("btnSnapHub").addEventListener("click", startSnap);
+  document.getElementById("btnSnapDojo").addEventListener("click", startSnap);
+  document.getElementById("btnCheck").addEventListener("click", checkAnswer);
+  document.getElementById("btnHear").addEventListener("click", function () {
+    if (state.current) speakJP(state.current.jp);
+  });
+  document.getElementById("btnHint").addEventListener("click", showSoftHint);
+  document.getElementById("btnUndo").addEventListener("click", function () { undoInput("answer"); });
+  document.getElementById("btnSkip").addEventListener("click", nextQ);
+  document.getElementById("btnLabCheck").addEventListener("click", checkLab);
+  document.getElementById("btnLabHear").addEventListener("click", function () {
+    speakJP(labFrame.jp(labNoun));
+  });
+  document.getElementById("btnLabUndo").addEventListener("click", function () { undoInput("labAns"); });
+  document.getElementById("answer").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") checkAnswer();
+  });
+  document.getElementById("labAns").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") checkLab();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
