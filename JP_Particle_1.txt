@@ -1,0 +1,37 @@
+Write a clear Japanese lesson on Japanese particle nuances. Write the explanations in natural Japanese. 
+Keep the teaching style practical and image-based, not textbook-stiff.
+
+Cover these particles and contrasts:
+wa vs ga
+o
+ni
+de
+to
+mo
+kara / made
+no
+extra distinctions: ga vs o with potential verbs, ni vs to for "with," particle + wa for contrast, ga meaning "but"
+end with a short decision guide
+
+Teaching points, apply them to every particle:
+Say what the particle is pointing at in the sentence.
+Say whether it marks old information, new information, contrast, or a relationship between two elements.
+Give one simple image or hook for the particle.
+Show a default everyday use.
+Show a use that changes the nuance or makes the sentence sound more specific.
+Contrast it with the particle learners most often confuse it with.
+Keep notes short: job, feel, common mix-up.
+
+For every example:
+1. give the Japanese sentence in kana/kanji
+2. give romaji
+3. give an English translation
+
+Use headings, short sections, and compact nuance notes after each particle. After the decision guide, offer to drill one pair next: wa/ga, ni/de, or ni/e.
+
+Audience: a learner who already knows basic Japanese and wants nuance, not a first-day intro.
+
+Include these sample contrasts somewhere in the lesson, using the same example format:
+densha ga kimashita
+kono densha ga ueno ni ikimasu ka
+kono densha wa ueno ni ikimasu ka
