@@ -1,0 +1,308 @@
+Particle Nuances
+
+Particles are tiny cameras. They decide what the sentence is looking at, and how. Below, each particle gets the same treatment: what it points at, what kind of information it marks, one image, a default use, a sharper use, and the mix-up people actually make.
+
+
+wa vs ga
+
+wa
+
+Points at: the thing already on the table.
+Marks: old information, or contrast.
+Image: a card already laid down. "As for this..."
+
+Default
+watashi wa gakusei desu.
+As for me, I'm a student.
+
+Sharper use: contrast
+koohii wa nomimasu. ocha wa nomimasen.
+Coffee I drink. Tea I don't.
+
+Often confused with: ga
+Job: topic / contrast
+Feel: known, soft, or "this one vs that one"
+Mix-up: treating every subject as wa
+
+
+ga
+
+Points at: the doer, the thing that exists, or the item you are identifying.
+Marks: new information, identification, sometimes an exclusive pick.
+Image: a flashlight. It points at one thing and says look at this.
+
+Default
+neko ga imasu.
+There is a cat.
+
+Sharper use: identification
+dare ga ikimasu ka.
+Who is going?
+
+tanaka-san ga ikimasu.
+Tanaka is the one going.
+
+The train set
+densha ga kimashita.
+A train has arrived. / Here comes a train.
+
+kono densha ga ueno ni ikimasu ka.
+Is this the train that goes to Ueno?
+You are picking this train out of several.
+
+kono densha wa ueno ni ikimasu ka.
+Does this train go to Ueno?
+The train is already the topic. Default platform question.
+
+Often confused with: wa
+Job: doer / new info / "this one"
+Feel: spotlight, announcement, selection
+Mix-up: using ga just because something is the grammatical subject
+
+
+o
+
+Points at: the thing the verb acts on, or the space you move across.
+Marks: a relationship between action and target.
+Image: the tip of an arrow. What the verb touches.
+
+Default
+hon o yomimasu.
+I read a book.
+
+Sharper use: path / space
+hashi o watarimasu.
+I cross the bridge.
+
+sora o tobu.
+fly through the sky
+
+Often confused with: ga after wanting / seeming / potential
+mizu ga hoshii.
+I want water.
+
+eiga ga mitai.
+I want to see a movie.
+
+Job: object / path
+Feel: "do this to that"
+Mix-up: mapping every English object onto o
+
+
+ni
+
+Points at: landing spot, time point, receiver, place of existence, purpose.
+Marks: a relationship: to where, at when, to whom, in order to.
+Image: a pin. You arrive there, exist there, or hand something there.
+
+Default
+tookyoo ni ikimasu.
+I go to Tokyo.
+
+sanji ni aimasu.
+I'll meet at 3.
+
+tomodachi ni agemashita.
+I gave it to a friend.
+
+eki ni imasu.
+I'm at the station.
+
+tabe ni ikimasu.
+I go in order to eat.
+
+Sharper use: agent in passive
+sensei ni shikararemashita.
+I got scolded by the teacher.
+
+Often confused with: e and de
+tookyoo e ikimasu.
+I head toward Tokyo.
+
+Job: destination / time / receiver / existence / purpose
+Feel: landing point
+Mix-up: "place = ni" for every location
+
+
+de
+
+Points at: the stage of the action, the tool, the material, the cause, the scope.
+Marks: a relationship: where it is done, what it is done with.
+Image: a stage and a prop. The action happens here, using this.
+
+Default
+kissaten de benkyou shimasu.
+I study at a cafe.
+
+basu de ikimasu.
+I go by bus.
+
+ki de tsukurimasu.
+I make it out of wood.
+
+Sharper use: cause
+kaze de gakkou o yasumimashita.
+I missed school because of a cold.
+
+Often confused with: ni
+eki ni imasu.
+I am at the station.
+
+eki de aimasu.
+We meet at the station.
+
+Job: place of action / means / material / cause
+Feel: the scene of doing
+Mix-up: using ni for any "at"
+
+
+to
+
+Points at: a partner in a list, a companion, quoted speech or thought, a natural condition.
+Marks: a relationship: with, and, that.
+Image: a tie. It binds A to B.
+
+Default
+pan to gyuunyuu o kaimashita.
+I bought bread and milk.
+
+tomodachi to hanashimasu.
+I talk with a friend.
+
+iku to iimashita.
+He said he would go.
+
+muzukashii to omoimasu.
+I think it's difficult.
+
+Sharper use: when X happens, Y naturally follows
+haru ni naru to sakura ga sakimasu.
+When it becomes spring, the cherry blossoms bloom.
+
+Often confused with: ya and ni
+ringo to banana
+apples and bananas
+
+ringo ya banana
+apples, bananas, and so on
+
+tomodachi to iku.
+go together with a friend
+
+tomodachi ni au.
+meet a friend
+
+Job: and / with / quote / natural if
+Feel: pairing
+Mix-up: translating every "with" as to
+
+
+mo
+
+Points at: an extra item added to a set already in mind.
+Marks: addition, sometimes "even."
+Image: one more thing dropped into the basket. "This too."
+
+Default
+watashi mo ikimasu.
+I will go too.
+
+pan mo kaimashita.
+I bought bread too.
+
+Sharper use
+ocha demo nomimashou.
+Let's drink tea or something.
+
+Often confused with: stacking it on top of wa / ga / o
+Job: also / even
+Feel: plus
+Mix-up: forgetting that mo takes the seat of wa, ga, or o instead of sitting beside them
+
+
+kara / made
+
+Points at: starting point and ending point. After a clause, kara points at a reason.
+Marks: a relationship: from-to, or because.
+Image: a line segment. Start here, stop there.
+
+Default
+ku-ji kara go-ji made hatarakimasu.
+I work from 9 to 5.
+
+Sharper use: because
+tsukareta kara nemasu.
+I'll sleep because I'm tired.
+
+Often confused with: node, which feels softer and more explanatory
+Job: from / until / because
+Feel: range, or "so..."
+Mix-up: treating noun-kara and clause-kara as the same mental move
+
+
+no
+
+Points at: the link between nouns, or a clause turned into a noun-like chunk.
+Marks: a relationship of belonging or kind; sometimes an explanation.
+Image: glue. It sticks nouns together.
+
+Default
+watashi no hon
+my book
+
+nihongo no sensei
+a Japanese teacher / a teacher of Japanese
+
+taberu no ga suki desu.
+I like eating.
+
+Sharper use: soft explanation
+isogashii no.
+(It's that) I'm busy.
+
+tomodachi no imouto no keitai
+my friend's sister's phone
+
+Often confused with: forcing every English of / 's into no
+Job: link / nominalize / explain
+Feel: one bundled unit
+Mix-up: overusing no where Japanese would just compound or drop it
+
+
+Extra distinctions
+
+Potential verbs often take ga on the thing you can do.
+kanji ga yomemasu.
+I can read kanji.
+
+Companion vs target
+tomodachi to iku.
+go with a friend
+
+tomodachi ni au.
+meet a friend
+
+Particle + wa makes contrast.
+tookyoo ni wa ikimasu. oosaka ni wa ikimasen.
+To Tokyo I will go. To Osaka I won't.
+
+Clause-final ga can mean "but."
+ame ga futta ga, dekaketa.
+It rained, but I went out.
+
+
+Decision guide
+
+Doer, existence, new info, which one? -> ga
+Already the topic, or contrast? -> wa
+Thing acted on, or space crossed? -> o
+Arrive, time, receiver, exist, purpose? -> ni
+Place of doing, tool, material, cause? -> de
+Direction toward? -> e
+And / with / quote? -> to
+Also / even? -> mo
+From / because? -> kara
+Up to? -> made
+Glue nouns or turn a phrase into a thing? -> no
+
+Want to drill one pair next: wa/ga, ni/de, or ni/e?
